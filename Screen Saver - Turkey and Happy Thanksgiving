@@ -1,0 +1,128 @@
+
+//var logo;
+var logos = [];
+var gt_lturkey;
+var gt_thanksgiving;
+
+
+
+function preload(){
+   gt_turkey = loadImage("grey-turkey.png"); 
+   gt_thanksgiving = loadImage("HappyThanksgiving.png");
+}
+
+
+function setup() {
+  createCanvas(1920, 1080);
+  
+    
+  for (let i = 0; i < 15; i += 1){
+    logos[i] = new Dvd();
+    
+  }
+	
+	for (let i = 0; i < 15; i += 1){
+    logos[i] = new Dvd_thanksgiving();
+    
+  }
+}
+
+
+
+function draw() {
+  background('gray');
+  //background(200, 200, 200);
+  
+  
+  
+  for (let d of logos){
+    
+    d.draw();
+  }
+  
+
+}
+
+function Dvd() {
+ 
+
+  this.x = width / 2;
+  this.y = height / 2;
+  this.speedX = random(-3, 3);
+  this.speedY = random(-3, 3);
+  this.hue = random(0, 100);
+
+  this.draw = function() {
+
+    rectMode(CENTER);
+
+    if (this.y + 40 > height || this.y - 40 < 0) {
+      this.speedY = -this.speedY;
+      this.hue = random(0, 100);
+    }
+
+    if (this.x + 40 > width || this.x - 40 < 0) {
+      this.speedX = -this.speedX;
+      this.hue = random(0, 100);
+
+    }
+    this.x += this.speedX;
+    this.y += this.speedY;
+
+    
+    noStroke();
+ 
+    imageMode(CENTER);
+    image(gt_turkey, this.x, this.y, 80, 80);
+		
+
+    
+
+  }
+}
+
+function Dvd_thanksgiving() {
+ 
+
+  this.x = width / 2;
+  this.y = height / 2;
+  this.speedX = random(-3, 3);
+  this.speedY = random(-3, 3);
+  this.hue = random(0, 100);
+
+  this.draw = function() {
+
+    rectMode(CENTER);
+
+    if (this.y + 40 > height || this.y - 40 < 0) {
+      this.speedY = -this.speedY;
+      this.hue = random(0, 100);
+    }
+
+    if (this.x + 40 > width || this.x - 40 < 0) {
+      this.speedX = -this.speedX;
+      this.hue = random(0, 100);
+
+    }
+    this.x += this.speedX;
+    this.y += this.speedY;
+
+    
+    noStroke();
+ 
+    imageMode(CENTER);
+    image(gt_thanksgiving, this.x, this.y, 80, 80);
+		
+  }
+}
+
+
+function keyPressed() {
+  if (keyCode == 32){
+    logos.push(new Dvd());
+  }
+  
+}
+function touchStarted() {
+  logos.push(new Dvd());
+}
