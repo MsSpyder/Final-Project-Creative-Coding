@@ -1,0 +1,62 @@
+import pronouncing
+import pycorpora
+import random
+
+
+def get_words(pos):
+
+    
+    if (pos is "animals"):
+        all_words = pycorpora.animals.common["animals"]
+    elif (pos is "verbs"):
+        all_words = [w["present"] for w in pycorpora.words.verbs["verbs"]]
+        
+ 
+    keepers = []
+    for n in all_words:
+        pl = pronouncing.phones_for_word(n)
+        if (len(pl) > 0):      
+            sc = pronouncing.syllable_count(pl[0])
+            if (sc == 1):
+                keepers.append(n)
+            
+    return keepers
+
+def get_pairs():
+    
+    verbs = get_words("verbs")
+    nouns = get_words("animals")
+
+    pairs = []
+    
+    for n in nouns:
+        for v in verbs:
+            #print("comparing " + f,p)
+            if (v in pronouncing.rhymes(n)):
+                pairs.append( (n,v) )
+                
+    
+    return pairs
+
+def an(word):
+    if (word[0] in ["a","e","i","o","u"]):
+        return "an " + word
+    else:
+        return "a " + word
+    
+    
+
+template = """
+    My favorite animal is {0}
+    and we like to {1}
+"""
+
+pair = random.choice(get_pairs())
+
+poem = template.format(
+    an(pair[0]),
+    pair[1]
+)
+
+print(poem)
+
